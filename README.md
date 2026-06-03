@@ -1,0 +1,1 @@
+# vault-initial-secrets-generator
