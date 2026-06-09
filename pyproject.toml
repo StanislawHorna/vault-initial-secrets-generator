@@ -1,0 +1,9 @@
+[project]
+name = "vault-initial-secrets-generator"
+version = "0.0.1"
+description = "Simple script to generate initial secrets for Vault from a JSON file structure. if they don't exist already."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "requests>=2.34.2",
+]

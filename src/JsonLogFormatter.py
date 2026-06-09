@@ -1,0 +1,16 @@
+import json
+import logging
+
+class JsonFormatter(logging.Formatter):
+
+    def format(self, record):
+        log_record = {
+            "level": record.levelname,
+            "timestamp": self.formatTime(record, self.datefmt),
+            "message": record.getMessage(),
+        }
+        # Include exception info if present
+        if record.exc_info:
+            log_record["exception"] = self.formatException(record.exc_info)
+
+        return json.dumps(log_record)

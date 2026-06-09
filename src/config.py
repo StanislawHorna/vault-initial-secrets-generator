@@ -1,0 +1,16 @@
+import os
+
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
+
+VAULT_ADDRESS = os.getenv("TF_VAR_VAULT_ADDRESS", "http://localhost:8200")
+VAULT_APP_ROLE_LOGIN_PATH = os.getenv("TF_VAR_VAULT_APP_ROLE_LOGIN_PATH", "auth/approle/login")
+VAULT_APP_ROLE_ROLE_ID = os.getenv("TF_VAR_VAULT_APP_ROLE")
+VAULT_APP_ROLE_SECRET_ID = os.getenv("TF_VAR_VAULT_APP_ROLE_SECRET_ID")
+
+VAULT_KV_NAME = os.getenv("TF_VAR_VAULT_KV_NAME")
+VAULT_KV_PREFIX = os.getenv("TF_VAR_VAULT_KV_PREFIX")
+
+SERVICE_HOSTNAME = os.getenv("SERVICE_HOSTNAME", "")
+
+SECRETS_RAW = os.getenv("SECRETS_TO_CREATE", "")
+RECREATE_IF_DYNAMIC_VALUE_MISMATCH = os.getenv("RECREATE_IF_DYNAMIC_VALUE_MISMATCH", "false").lower() == "true"

@@ -1,0 +1,36 @@
+name: Build container
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.sh"
+      - "Dockerfile"
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release.outputs.tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Release
+        id: release
+        uses: StanislawHorna/GitHub_Release/create-release@main
+        with:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  Build:
+    uses: StanislawHorna/Docker/.github/workflows/build-docker-image.yml@main
+    needs: Release
+    with:
+      image-version: ${{ needs.Release.outputs.version }}
