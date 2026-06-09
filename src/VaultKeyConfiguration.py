@@ -40,23 +40,24 @@ class VaultKeyConfiguration:
         if not isinstance(other, KeyVaultKey):
             return NotImplemented
 
+        checks = []
         if not (
             self.path == other.path and len(self.properties) == len(other.properties)
         ):
             logging.warning(
                 f"Key path or number of properties mismatch (expected path: {self.path}, actual path: {other.path}, expected number of properties: {len(self.properties)}, actual number of properties: {len(other.properties)})"
             )
-            return False
+            checks.append(False)
 
-        properties_check = []
+
         for p in self.properties:
             matching = [v for _, v in other.properties.items() if v.name == p.name]
             if len(matching) != 1:
                 logging.error(
                     f"Property '{p.name}' is missing in the vault key or there are multiple properties with the same name (expected 1, actual {len(matching)})"
                 )
-                properties_check.append(False)
+                checks.append(False)
                 continue
-            properties_check.append(p == matching[0])
+            checks.append(p == matching[0])
 
-        return all(properties_check)
+        return all(checks)
