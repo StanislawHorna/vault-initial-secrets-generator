@@ -18,7 +18,7 @@ class VaultKeyConfiguration:
     path: str = field(init=False)
 
     def get_payload(self) -> dict[str, dict[str, str]]:
-        return {"data": {p.name: p.value for p in self.properties}}
+        return {"data": {p.name: p.get_value() for p in self.properties}}
 
     def __post_init__(self):
         if self.service_hostname != "":
