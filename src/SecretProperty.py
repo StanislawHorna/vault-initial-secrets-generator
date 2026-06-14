@@ -72,13 +72,16 @@ class SecretProperty:
 
         # If value is not dynamic, return it as is
         if not self.is_dynamic:
+            logging.info(f"Using static value for property '{self.name}'")
             return self.value
 
         # If value is dynamic and not empty,
         # this means that the value was fetched from vault and should be reused to avoid unnecessary updates
         if self.value != "" and not generate_new_if_dynamic_value:
+            logging.info(f"Reusing existing value for dynamic property '{self.name}'")
             return self.value
 
+        logging.info(f"Generating new value for dynamic property '{self.name}'")
         random_part = (
             self.value_prefix + self.value_section_separator
             if self.value_prefix != ""
